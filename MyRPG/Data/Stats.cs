@@ -39,7 +39,13 @@ namespace MyRPG.Data
             set => _currentMagic = Math.Clamp(value, 0, MaxMagic);
         }
 
+        private int _currentMoney;
         public int Money { get; set; }
+        public int CurrentMoney
+        {
+            get => _currentMoney;
+            set => _currentMoney = Math.Clamp(value, 0, Money);
+        }
 
         // Combat stats
         public int Damage { get; set; }
@@ -65,6 +71,7 @@ namespace MyRPG.Data
             MaxMagic = magic;
             _currentMagic = magic;
             Money = money;
+            _currentMoney = money;
             Damage = damage;
             Defense = defense;
         }

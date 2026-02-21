@@ -17,6 +17,7 @@ namespace MyRPG
         private RoomManager _roomManager;
         private Camera _camera;
         private List<NPC> _npcs = new List<NPC>();
+        private List<Boss> _boss = new List<Boss>();
 
         public MyRPG()
         {
@@ -57,21 +58,23 @@ namespace MyRPG
             Texture2D wall = CreatePlaceholderTexture(64, 64, Color.Gray);
             Texture2D doorTex = CreatePlaceholderTexture(64, 64, Color.Brown);
             Texture2D npcTex = CreatePlaceholderTexture(32, 32, Color.Green);
+            Texture2D itemTex = CreatePlaceholderTexture(16, 16, Color.Yellow);
+            Texture2D bossTex = CreatePlaceholderTexture(64, 64, Color.Red);
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            //Texture2D playerTexture = Content.Load<Texture2D>("player_sprite");
-            //Texture2D grass = Content.Load<Texture2D>("grass_tile");
-            //Texture2D wall = Content.Load<Texture2D>("wall_tile");
             _roomManager = RoomFactory.CreateRooms(grass, wall, doorTex);
 
             SpriteFont font = Content.Load<SpriteFont>("Fonts/default");
             DialogueSystem.LoadFont(font);
             StatsMenu.LoadFont(font);
-            //Texture2D npcTex = Content.Load<Texture2D>("npc_sprite");
-
-            _npcs.Add(new NPC(npcTex, new Vector2(200, 200), "Hello, traveler! Dark times are ahead."));
-            _npcs.Add(new NPC(npcTex, new Vector2(400, 200), "I've lost my favorite C++ compiler... have you seen it?"));
+            InventoryMenu.LoadFont(font);
+            _boss.Add(new Boss(bossTex, new Vector2(300, 300), "I am the mighty boss! Prepare to be defeated!", "bossroom", 200));
+            _npcs.Add(new NPC(npcTex, new Vector2(200, 200), "Hello, traveler! Dark times are ahead.", "hallway"));
+            _npcs.Add(new NPC(npcTex, new Vector2(400, 200), "I've lost my favorite C++ compiler... have you seen it?", "hallway"));
             Stats playerStats = new Stats(10, 12, 14, 8, 15, 11, 9, 13, 100, 50, 30, 50, 15, 8);
             _player = new Player(playerTexture, new Vector2(128, 128), playerStats);
+            _player.Inventory.Add(new Item("Gold Coin", "A shiny gold coin", npcTex, 10));
+            _player.Inventory.Add(new Item("Health Potion", "Restores 50 health", npcTex, 25));
+            _player.Inventory.Add(new Item("Rusty Sword", "An old but serviceable sword", npcTex, 15));
 
             Globals.Content = Content;
             Globals.SpriteBatch = _spriteBatch;
@@ -98,12 +101,20 @@ namespace MyRPG
             }
             // TODO: Add your update logic here
             Globals.Update(gameTime);
+            
+            //The Key Check For Inventory and Stats Menu is here,
+            //we want it to be checked before the player movement
+            //so that the player doesn't move when opening the menu
             InputManager.Update();
             if (InputManager.IsKeyPressed(Keys.I))
             {
+                InventoryMenu.Toggle();
                 StatsMenu.Toggle();
             }
+
+
             DialogueSystem.Update(Globals.Time);
+            
             _player.Update(_roomManager.CurrentRoom, _npcs);
 
             string targetRoom = _roomManager.GetTargetRoom(_player.Position, _player.Width, _player.Height);
@@ -113,6 +124,8 @@ namespace MyRPG
                 _roomManager.SetCurrentRoom(targetRoom);
                 _player.Position = _roomManager.GetSpawnPosition(targetRoom, currentRoomName);
             }
+
+
             _camera.Follow(_player.Position);
             base.Update(gameTime);
         }
@@ -134,6 +147,7 @@ namespace MyRPG
             _spriteBatch.Begin();
             DialogueSystem.Draw(_spriteBatch, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             StatsMenu.Draw(_spriteBatch, _player.Stats);
+            InventoryMenu.Draw(_spriteBatch, _player.Inventory);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

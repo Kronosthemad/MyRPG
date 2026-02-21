@@ -13,6 +13,7 @@ public class Player
     public Vector2 Position;
     public float Speed;
     public Stats Stats { get; set; }
+    public Inventory Inventory { get; private set; }
     public int Width => Texture?.Width ?? 32;
     public int Height => Texture?.Height ?? 32;
 
@@ -22,6 +23,7 @@ public class Player
         Position = startPosition;
         Speed = 250f;
         Stats = stats;
+        Inventory = new Inventory(20);
     }
 
     public void Update(GameTime gameTime)

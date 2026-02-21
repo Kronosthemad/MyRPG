@@ -46,7 +46,7 @@ namespace MyRPG.Core
                 $"Health:   {stats.CurrentHealth} / {stats.MaxHealth}",
                 $"Stamina:  {stats.CurrentStamina} / {stats.MaxStamina}",
                 $"Magic:    {stats.CurrentMagic} / {stats.MaxMagic}",
-                $"Money:    {stats.Money} gold"
+                $"Money:    {stats.CurrentMoney} gold"
             };
 
             float lineHeight = _font.MeasureString("A").Y;
