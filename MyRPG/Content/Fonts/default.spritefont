@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Microsoft="http://schemas.microsoft.com/winfx/2006/xama/content">
+  <Asset Type="Microsoft.Xna.Framework.Content.Pipeline.Graphics.FontDescription">
+    <FontName>Segoe UI</FontName>
+    <Size>16</Size>
+    <Style>Regular</Style>
+    <CharacterRegions>
+      <CharacterRegion>
+        <Start>&#32;</Start>
+        <End>&#126;</End>
+      </CharacterRegion>
+    </CharacterRegions>
+  </Asset>
+</XnaContent>
