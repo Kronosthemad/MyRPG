@@ -15,7 +15,7 @@ namespace MyRPG.Entities
         private float _directionTimer;
         private const float DirectionChangeInterval = 2f;
 
-        public Boss(Texture2D texture, Vector2 startPosition, string dialogue, string roomName = "boss", int v = 0) 
+        public Boss(Texture2D texture, Vector2 startPosition, string dialogue, string roomName = "bossroom", int v = 0) 
             : base(texture, startPosition)
         {
             Dialogue = dialogue;

@@ -13,7 +13,7 @@ namespace MyRPG.Data
             manager.AddRoom("hallway", CreateHallway(grassTex, wallTex, doorTex));
             manager.AddRoom("treasure", CreateTreasureRoom(grassTex, wallTex, doorTex));
             manager.AddRoom("armory", CreateArmoryRoom(grassTex, wallTex, doorTex));
-            manager.AddRoom("boss", CreateBossRoom(grassTex, wallTex, doorTex));
+            manager.AddRoom("bossroom", CreateBossRoom(grassTex, wallTex, doorTex));
 
             manager.SetCurrentRoom("hallway");
             return manager;
@@ -38,7 +38,7 @@ namespace MyRPG.Data
             room.DoorTexture = doorTex;
             room.Doors.Add(new Door("treasure", new Vector2(0, 3 * 64), new Vector2(5 * 64, 3 * 64), 64, 64));
             room.Doors.Add(new Door("armory", new Vector2(11 * 64, 3 * 64), new Vector2(6 * 64, 3 * 64), 64, 64));
-            room.Doors.Add(new Door("boss", new Vector2(5 * 64, 0), new Vector2(5 * 64, 4 * 64), 64, 64));
+            room.Doors.Add(new Door("bossroom", new Vector2(5 * 64, 0), new Vector2(5 * 64, 4 * 64), 64, 64));
 
             return room;
         }
@@ -102,7 +102,7 @@ namespace MyRPG.Data
                 }
             }
 
-            var room = new Room(width, height, "boss", tiles);
+            var room = new Room(width, height, "bossroom", tiles);
             room.DoorTexture = doorTex;
             room.Doors.Add(new Door("hallway", new Vector2(4 * 64, 7 * 64), new Vector2(5 * 64, 1 * 64), 64, 64));
 
